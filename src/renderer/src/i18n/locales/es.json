@@ -1,0 +1,36 @@
+{
+  "common": {
+    "confirm": "Eliminar",
+    "cancel": "Cancelar"
+  },
+  "nav": {
+    "home": "Inicio",
+    "history": "Historial"
+  },
+  "counter": {
+    "loading": "Cargando...",
+    "addItem": "Agregar elemento",
+    "addPlaceholder": "Ingresa el nombre del elemento (ej: Cigarros, Cerveza)",
+    "addButton": "Agregar",
+    "noItems": "No hay elementos. Por favor agrega uno.",
+    "addFailed": "Error al agregar",
+    "deleteConfirm": "¿Seguro que quieres eliminar \"{{name}}\"?",
+    "deleteFailed": "Error al eliminar",
+    "tomorrowMessage": "¡Hazlo mejor mañana!",
+    "decrementConfirm": "¿De verdad?"
+  },
+  "itemCard": {
+    "limitExceeded": "Límite superado",
+    "dailyLimit": "Límite diario:"
+  },
+  "history": {
+    "loading": "Cargando...",
+    "noHistory": "Sin historial",
+    "checkLater": "Comprueba al día siguiente",
+    "limit": "Límite {{value}}",
+    "count": "Cantidad",
+    "deleteHistory": "Eliminar historial",
+    "deleteHistoryConfirm": "¿Seguro que quieres eliminar todo el historial?",
+    "deleteFailed": "Error al eliminar el historial"
+  }
+}

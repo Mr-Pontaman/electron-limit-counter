@@ -1,0 +1,36 @@
+{
+  "common": {
+    "confirm": "删除",
+    "cancel": "取消"
+  },
+  "nav": {
+    "home": "主页",
+    "history": "历史"
+  },
+  "counter": {
+    "loading": "加载中...",
+    "addItem": "添加项目",
+    "addPlaceholder": "输入项目名称（例如：香烟、啤酒）",
+    "addButton": "添加",
+    "noItems": "没有项目，请添加一个。",
+    "addFailed": "添加失败",
+    "deleteConfirm": "确定要删除 \"{{name}}\" 吗？",
+    "deleteFailed": "删除失败",
+    "tomorrowMessage": "明天加油！",
+    "decrementConfirm": "真的吗？"
+  },
+  "itemCard": {
+    "limitExceeded": "超出限制",
+    "dailyLimit": "每日限制:"
+  },
+  "history": {
+    "loading": "加载中...",
+    "noHistory": "暂无历史记录",
+    "checkLater": "次日后再查看",
+    "limit": "限制 {{value}}",
+    "count": "次数",
+    "deleteHistory": "删除历史",
+    "deleteHistoryConfirm": "确定要删除全部历史记录吗？",
+    "deleteFailed": "删除历史失败"
+  }
+}

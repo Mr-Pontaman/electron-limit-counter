@@ -1,0 +1,36 @@
+{
+  "common": {
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "nav": {
+    "home": "Home",
+    "history": "History"
+  },
+  "counter": {
+    "loading": "Loading...",
+    "addItem": "Add Item",
+    "addPlaceholder": "Enter item name (e.g. Beer, Cigarettes)",
+    "addButton": "Add",
+    "noItems": "No items. Please add one.",
+    "addFailed": "Failed to add item",
+    "deleteConfirm": "Are you sure you want to delete \"{{name}}\"?",
+    "deleteFailed": "Failed to delete item",
+    "tomorrowMessage": "Do better tomorrow!",
+    "decrementConfirm": "Really?"
+  },
+  "itemCard": {
+    "limitExceeded": "Limit exceeded",
+    "dailyLimit": "Daily limit:"
+  },
+  "history": {
+    "loading": "Loading...",
+    "noHistory": "No history yet",
+    "checkLater": "Check again the following day",
+    "limit": "Limit {{value}}",
+    "count": "Count",
+    "deleteHistory": "Delete History",
+    "deleteHistoryConfirm": "Are you sure you want to delete all history?",
+    "deleteFailed": "Failed to delete history"
+  }
+}
