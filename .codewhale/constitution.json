@@ -1,0 +1,6 @@
+{
+  "protected_invariants": [
+    "ルートにある AGENT.md を読んで、そこに書いてあるルールを最優先で守ってください。"
+  ],
+  "verification_policy": [""]
+}

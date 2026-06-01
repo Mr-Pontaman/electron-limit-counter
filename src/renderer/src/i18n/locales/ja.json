@@ -1,0 +1,35 @@
+{
+  "common": {
+    "confirm": "削除",
+    "cancel": "キャンセル"
+  },
+  "nav": {
+    "home": "ホーム",
+    "history": "履歴"
+  },
+  "counter": {
+    "addItem": "アイテムを追加",
+    "addPlaceholder": "アイテム名を入力（例：タバコ、ビール）",
+    "addButton": "追加",
+    "noItems": "アイテムがありません。新規追加してください。",
+    "addFailed": "追加に失敗しました",
+    "deleteConfirm": "\"{{name}}\" を削除してもよろしいですか？",
+    "deleteFailed": "削除に失敗しました",
+    "tomorrowMessage": "明日は頑張れよ！",
+    "decrementConfirm": "本当？"
+  },
+  "itemCard": {
+    "limitExceeded": "制限超過",
+    "dailyLimit": "一日の制限数:"
+  },
+  "history": {
+    "loading": "読み込み中...",
+    "noHistory": "履歴がありません",
+    "checkLater": "翌日以降に確認してください",
+    "limit": "制限 {{value}}",
+    "count": "回数",
+    "deleteHistory": "履歴を削除",
+    "deleteHistoryConfirm": "全ての履歴を削除してもよろしいですか？",
+    "deleteFailed": "削除に失敗しました"
+  }
+}
