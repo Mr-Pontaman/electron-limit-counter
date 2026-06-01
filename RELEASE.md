@@ -6,8 +6,17 @@
   - *SnapのuploadをActionsで行う際に stable としてuploadする方法がわからず。
   - そのため stable へのupdateはsnapcraft.ioかターミナルから行う。
 
+snapのupdateの為に snapcraft-store の認証が必要
+```
+snapcraft export-login credentials.txt
+```
+- 生成されたものはリポジトリの環境変数に追加
+- このリポジトリでは`SNAPCRAFT_STORE_CREDENTIALS`
+
 ### 流れ
 
 1. ローカルでコード変更 -> push / merge
 2. `git tag v1.1.0` & `git push origin v1.1.0`　<- タグの作成（Github Actionsが走る）
 3. snapcraft.ioかターミナルからsnapをstableへpromote
+
+
