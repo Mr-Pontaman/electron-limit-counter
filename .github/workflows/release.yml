@@ -39,11 +39,9 @@ jobs:
       - name: Build app
         run: pnpm run build
 
-      # Linuxのみ
       - name: Install Snapcraft
         if: runner.os == 'Linux'
-        run: |
-          sudo snap install snapcraft --classic
+        run: sudo snap install snapcraft --classic
 
       - name: Package Windows
         if: runner.os == 'Windows'
@@ -56,3 +54,4 @@ jobs:
         run: pnpm exec electron-builder --linux --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
