@@ -42,3 +42,6 @@ publish:
   provider: github #  generic ではなく github にする
   owner: Mr-Pontaman #  GitHubユーザー名
   repo: electron-limit-counter #  リポジトリ名
+snap:
+  publish:
+    - stable
