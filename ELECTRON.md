@@ -1,4 +1,4 @@
-# Basic
+## Basic
 
 - renderer (React側):
   - ブラウザはnodeは触れない。preloadの窓口（window.electronAPI.saveFile()）経由で叩く
