@@ -1,6 +1,6 @@
 {
   "name": "limit-counter",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Daily limit counter application",
   "main": "./out/main/index.js",
   "author": "Mr.Pontaman",
