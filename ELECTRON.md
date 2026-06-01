@@ -14,4 +14,6 @@ Next.jsでいうなら
 - preload ＝ フロントとバックを安全に繋ぐ通信レイヤー
 - main ＝ API RoutesやServer Actions（サーバー/Node.js側で動くバックエンド）
 
+---
+
 DevTools -> F12キー
