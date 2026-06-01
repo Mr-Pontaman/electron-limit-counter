@@ -9,3 +9,12 @@ Electron-vite 配布方法
 
 snapを分ける理由
 - Github Actionsでsnap-store関係のエラーが出てわからず
+
+snapのupload
+
+1. pnpm run build:linux
+2. upload
+```
+snapcraft upload dist/test-counter-app-*.snap --release=stable
+
+```
