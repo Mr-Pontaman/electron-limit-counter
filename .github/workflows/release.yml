@@ -39,6 +39,12 @@ jobs:
       - name: Build app
         run: pnpm run build
 
+      # Linuxのみ
+      - name: Install Snapcraft
+        if: runner.os == 'Linux'
+        run: |
+          sudo snap install snapcraft --classic
+
       - name: Package Windows
         if: runner.os == 'Windows'
         run: pnpm exec electron-builder --win --publish always
