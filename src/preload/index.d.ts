@@ -28,8 +28,8 @@ type DailyHistory = Record<string, HistoryEntry[]>;
 
 interface CustomAPI {
   alertOnce: (message: string) => Promise<unknown>;
+  // Ubuntuだと日本語は豆腐になるので英語だけ渡す。
   showMessageBox: (message: string) => Promise<void>;
-  showConfirmBox: (message: string) => Promise<boolean>;
   getCount: (target: string) => Promise<number>;
   incrementCount: (target: string) => Promise<number>;
   decrementCount: (target: string) => Promise<number>;

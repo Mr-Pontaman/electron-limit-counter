@@ -15,9 +15,6 @@ if (process.contextIsolated) {
       showMessageBox: async (message: string) => {
         return await ipcRenderer.invoke("show-message-box", message);
       },
-      showConfirmBox: async (message: string) => {
-        return (await ipcRenderer.invoke("show-confirm-box", message)) as boolean;
-      },
       getCount: async (target: string) => {
         return await ipcRenderer.invoke("get-count", target);
       },
