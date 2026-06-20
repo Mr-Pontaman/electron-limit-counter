@@ -8,7 +8,6 @@
     "history": "Historial"
   },
   "counter": {
-    "loading": "Cargando...",
     "addItem": "Agregar elemento",
     "addPlaceholder": "Ingresa el nombre del elemento (ej: Cigarros, Cerveza)",
     "addButton": "Agregar",

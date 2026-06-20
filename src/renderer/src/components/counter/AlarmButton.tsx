@@ -11,7 +11,7 @@ export const AlarmButton = ({ isVisible, onClick }: AlarmButtonProps) => {
   }
 
   return (
-    <button className="cursor-pointer" onClick={onClick}>
+    <button className="cursor-pointer" onClick={onClick} type="button">
       <Music size={30} className="animate-pulse" />
     </button>
   );

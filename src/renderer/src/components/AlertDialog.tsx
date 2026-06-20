@@ -1,23 +1,24 @@
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from "@renderer/components/ui/dialog";
 import { Button } from "@renderer/components/ui/button";
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 type DialogProps = {
   open: boolean;
   onClose: () => void;
-  message: string;
+  title: string;
+  message?: string;
 };
 
 const FLEE_RADIUS = 100; // この距離以内でボタンが逃げ始める (px)
 const MAX_OFFSET_X = 100; // X方向の最大逃げ幅
 const MAX_OFFSET_Y = 45; // Y方向の最大逃げ幅
 
-export const AlertDialog = ({ open, onClose, message }: DialogProps) => {
+export const AlertDialog = ({ open, onClose, title, message }: DialogProps) => {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const currentOffset = useRef({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     const btn = buttonRef.current;
     if (!btn) return;
 
@@ -31,7 +32,7 @@ export const AlertDialog = ({ open, onClose, message }: DialogProps) => {
 
     if (dist < FLEE_RADIUS && dist > 0) {
       // カーソルと反対方向に力を加える
-      const force = ((FLEE_RADIUS - dist) / FLEE_RADIUS) * 20;
+      const force = ((FLEE_RADIUS - dist) / FLEE_RADIUS) * 10;
       const nx = -dx / dist;
       const ny = -dy / dist;
 
@@ -47,7 +48,7 @@ export const AlertDialog = ({ open, onClose, message }: DialogProps) => {
       currentOffset.current = { x: newX, y: newY };
       setOffset({ x: newX, y: newY });
     }
-  }, []);
+  };
 
   return (
     <Dialog open={open}>
@@ -57,15 +58,15 @@ export const AlertDialog = ({ open, onClose, message }: DialogProps) => {
         showCloseButton={false}
         onMouseMove={handleMouseMove}
       >
-        <DialogTitle className="text-center text-lg">{message}</DialogTitle>
+        <DialogTitle className="text-center text-lg">{title}</DialogTitle>
         <DialogFooter className="sm:justify-center">
           <Button
             ref={buttonRef}
             onClick={onClose}
-            className="w-max transition-none"
+            className="w-max transition-none cursor-pointer hover:ring-2 hover:ring-primary"
             style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
           >
-            OK
+            {message || "OK"}
           </Button>
         </DialogFooter>
       </DialogContent>

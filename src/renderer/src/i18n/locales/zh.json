@@ -8,7 +8,6 @@
     "history": "历史"
   },
   "counter": {
-    "loading": "加载中...",
     "addItem": "添加项目",
     "addPlaceholder": "输入项目名称（例如：香烟、啤酒）",
     "addButton": "添加",

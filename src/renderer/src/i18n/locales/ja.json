@@ -8,7 +8,6 @@
     "history": "履歴"
   },
   "counter": {
-    "loading": "読み込み中...",
     "addItem": "アイテムを追加",
     "addPlaceholder": "アイテム名を入力（例：タバコ、ビール）",
     "addButton": "追加",

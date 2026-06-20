@@ -8,7 +8,6 @@
     "history": "History"
   },
   "counter": {
-    "loading": "Loading...",
     "addItem": "Add Item",
     "addPlaceholder": "Enter item name (e.g. Beer, Cigarettes)",
     "addButton": "Add",
