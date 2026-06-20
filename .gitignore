@@ -1,7 +1,29 @@
-node_modules
-dist
-out
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+out/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Tooling / Cache
 .eslintcache
+*.tsbuildinfo
 *.log*
 .env*
+.deepseek
+
+# Agent / Personal tooling
+
+# Git
+.git
