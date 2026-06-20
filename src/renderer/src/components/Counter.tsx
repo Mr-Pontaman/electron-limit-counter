@@ -1,176 +1,72 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useCounter } from "@renderer/hooks/useCounter";
 import { AddItemForm } from "./counter/AddItemForm";
 import { AlarmButton } from "./counter/AlarmButton";
 import { ItemCard } from "./counter/ItemCard";
 import { AlertDialog } from "./AlertDialog";
 import { ConfirmDialog } from "./ConfirmDialog";
-import { useAlarmAudio } from "../hooks/useAlarmAudio";
-import { Item } from "@renderer/types";
 
-const Counter = () => {
-  const { t } = useTranslation();
-  const [items, setItems] = useState<Item[]>([]);
-  const [newItemName, setNewItemName] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [dialogKey, setDialogKey] = useState(0);
-  const [confirmTarget, setConfirmTarget] = useState<string | null>(null);
-  const [confirmKey, setConfirmKey] = useState(0);
-  const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
-  const { isAlarmOn, stopAlarmAndHide } = useAlarmAudio(items);
+const Counter = ({ t }: { t: (key: string) => string }) => {
+  const {
+    items,
+    newItemName,
+    setNewItemName,
+    initialError,
+    isDialogOpen,
+    dialogKey,
+    confirmTarget,
+    confirmKey,
+    deleteTarget,
+    isAlarmOn,
+    handleAlarmClick,
+    handleDialogClose,
+    handleAddItem,
+    handleDeleteRequest,
+    handleConfirmDelete,
+    handleIncrement,
+    handleDecrement,
+    handleConfirmDecrement,
+    handleSetLimit
+  } = useCounter({ t });
 
-  const handleAlarmClick = () => {
-    setDialogKey((k) => k + 1);
-    setIsDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setIsDialogOpen(false);
-    stopAlarmAndHide();
-  };
-
-  const loadItems = async () => {
-    try {
-      const fetchedItems = await window.api.getItems();
-      setItems(fetchedItems || []);
-    } catch (error) {
-      console.error("Failed to load items:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    queueMicrotask(() => {
-      void loadItems();
-    });
-  }, []);
-
-  const handleAddItem = async () => {
-    if (!newItemName.trim()) {
-      return;
-    }
-
-    try {
-      const result = await window.api.addItem(newItemName);
-      if (result.success) {
-        setNewItemName("");
-        await loadItems();
-      } else {
-        await window.api.showMessageBox(result.error || t("counter.addFailed"));
-      }
-    } catch (error) {
-      console.error("Failed to add item:", error);
-      await window.api.showMessageBox(t("counter.addFailed"));
-    }
-  };
-
-  const handleDeleteItem = (itemName: string) => {
-    setDeleteTarget(itemName);
-  };
-
-  const handleConfirmDelete = async () => {
-    if (!deleteTarget) return;
-    const itemName = deleteTarget;
-    setDeleteTarget(null);
-    try {
-      const result = await window.api.deleteItem(itemName);
-      if (result.success) {
-        await loadItems();
-      } else {
-        await window.api.showMessageBox(result.error || t("counter.deleteFailed"));
-      }
-    } catch (error) {
-      console.error("Failed to delete item:", error);
-      await window.api.showMessageBox(t("counter.deleteFailed"));
-    }
-  };
-
-  const handleIncrement = async (itemName: string) => {
-    try {
-      const newCount = await window.api.incrementCount(itemName);
-      const item = items.find((i) => i.name === itemName);
-      if (item) {
-        item.count = newCount;
-        setItems([...items]);
-      }
-    } catch (error) {
-      console.error("Failed to increment count:", error);
-    }
-  };
-
-  const handleDecrement = async (itemName: string) => {
-    setConfirmKey((k) => k + 1);
-    setConfirmTarget(itemName);
-  };
-
-  const handleConfirmDecrement = async () => {
-    if (!confirmTarget) return;
-    const itemName = confirmTarget;
-    setConfirmTarget(null);
-    try {
-      const newCount = await window.api.decrementCount(itemName);
-      const item = items.find((i) => i.name === itemName);
-      if (item) {
-        item.count = newCount;
-        setItems([...items]);
-      }
-    } catch (error) {
-      console.error("Failed to decrement count:", error);
-    }
-  };
-
-  const handleSetLimit = async (itemName: string, newLimit: number) => {
-    try {
-      const result = await window.api.setLimit(itemName, newLimit);
-      if (!result.success) {
-        await window.api.showMessageBox(result.error || t("counter.addFailed"));
-        return;
-      }
-      const item = items.find((i) => i.name === itemName);
-      if (item) {
-        item.limit = newLimit;
-        setItems([...items]);
-      }
-    } catch (error) {
-      console.error("Failed to set limit:", error);
-    }
-  };
-
-  if (loading) {
-    return <div className="p-4">{t("counter.loading")}</div>;
+  if (initialError) {
+    return <div className="p-4 text-center text-red-500 font-medium">Error loading items</div>;
   }
 
   return (
     <div className="grid gap-10">
+      {/* 逃げるカーソルのDialog */}
       <AlertDialog
         key={dialogKey}
         open={isDialogOpen}
         onClose={handleDialogClose}
-        message={t("counter.tomorrowMessage")}
+        title={t("counter.tomorrowMessage")}
+        message="OK"
       />
       <AlertDialog
         key={`confirm-${confirmKey}`}
         open={confirmTarget !== null}
         onClose={handleConfirmDecrement}
-        message={t("counter.decrementConfirm")}
+        title={t("counter.decrementConfirm")}
+        message="YES"
       />
+
+      {/* 削除用のDialog */}
       <ConfirmDialog
         open={deleteTarget !== null}
-        message={t("counter.deleteConfirm", { name: deleteTarget ?? "" })}
+        message={(t as any)("counter.deleteConfirm", { name: deleteTarget ?? "" })}
         onConfirm={handleConfirmDelete}
-        onCancel={() => setDeleteTarget(null)}
+        onCancel={() => handleDeleteRequest(null)}
       />
+
       <AlarmButton isVisible={isAlarmOn} onClick={handleAlarmClick} />
       <AddItemForm
         value={newItemName}
         onChange={setNewItemName}
         onSubmit={handleAddItem}
         isAlarmOn={isAlarmOn}
+        t={t}
       />
 
-      {/* アイテム一覧 */}
       {items.length === 0 ? (
         <div className="text-center py-8 text-gray-500">{t("counter.noItems")}</div>
       ) : (
@@ -182,8 +78,9 @@ const Counter = () => {
               onIncrement={handleIncrement}
               onDecrement={handleDecrement}
               onSetLimit={handleSetLimit}
-              onDelete={handleDeleteItem}
+              onDelete={handleDeleteRequest}
               isAlarmOn={isAlarmOn}
+              t={t}
             />
           ))}
         </div>

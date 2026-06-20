@@ -11,7 +11,7 @@ export const useAlarmAudio = (items: Item[]): UseAlarmAudioResult => {
   const [isAlarmOn, setIsAlarmOn] = useState(false);
   const alarmRef = useRef<HTMLAudioElement | null>(null);
   const startedAlarmRef = useRef(false);
-  // プリミティブ値で保持することでミューテーションの影響を受けない
+
   const prevCountsRef = useRef<Map<string, number>>(new Map());
 
   useEffect(() => {
@@ -30,34 +30,32 @@ export const useAlarmAudio = (items: Item[]): UseAlarmAudioResult => {
   useEffect(() => {
     const prevCounts = prevCountsRef.current;
 
-    const newlyExceeded = items.some((item) => {
+    const hasNewlyExceeded = items.some((item) => {
       if (item.count <= item.limit) return false;
+
       const prevCount = prevCounts.get(item.name);
       if (prevCount === undefined) return false;
-      // カウントが増加した結果、制限を超えている（超過中も毎回検知）
+
       return item.count > prevCount;
     });
 
-    // チェック後にスナップショットを更新（プリミティブ値なのでミューテーション不問）
     prevCountsRef.current = new Map(items.map((item) => [item.name, item.count]));
 
-    if (!newlyExceeded || startedAlarmRef.current) {
-      return;
-    }
+    if (!hasNewlyExceeded || startedAlarmRef.current) return;
 
+    // アラーム開始
     startedAlarmRef.current = true;
     setIsAlarmOn(true);
-    void alarmRef.current?.play().catch((e) => {
-      console.error("Failed to play alarm:", e);
+    void alarmRef.current?.play().catch((error) => {
+      console.error("Failed to play alarm:", error);
     });
-  }, [items]);
+  }, [JSON.stringify(items.map((i) => ({ name: i.name, count: i.count })))]);
 
   const stopAlarmAndHide = () => {
-    alarmRef.current?.pause();
     if (alarmRef.current) {
+      alarmRef.current.pause();
       alarmRef.current.currentTime = 0;
     }
-
     startedAlarmRef.current = false;
     setIsAlarmOn(false);
   };

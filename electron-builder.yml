@@ -39,6 +39,6 @@ appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:
-  provider: github #  generic ではなく github にする
+  provider: github
   owner: Mr-Pontaman #  GitHubユーザー名
-  repo: electron-daily-counter #  リポジトリ名
+  repo: electron-limit-counter #  リポジトリ名

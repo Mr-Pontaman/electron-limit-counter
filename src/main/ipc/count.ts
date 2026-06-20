@@ -16,6 +16,18 @@ interface Item {
   createdAt: number;
 }
 
+/*
+JSON Storage Format:
+{
+  "item:ビール": {
+    "name": "ビール",
+    "count": 3,
+    "limit": 2,
+    "createdAt": 1234567891
+  }
+}
+*/
+
 type StoredValue = number | string | Item;
 type DataStore = Record<string, StoredValue>;
 
@@ -86,6 +98,7 @@ export const registerHandleCount = () => {
     const lastReset =
       typeof data[META_LAST_RESET_KEY] === "string" ? data[META_LAST_RESET_KEY] : "";
 
+    // すでに今日リセットされていればそのまま返す
     if (lastReset === today) {
       return data;
     }
@@ -289,21 +302,3 @@ export const registerHandleCount = () => {
     return { success: true };
   });
 };
-
-/*
-JSON Storage Format:
-{
-  "item:タバコ": {
-    "name": "タバコ",
-    "count": 10,
-    "limit": 5,
-    "createdAt": 1234567890
-  },
-  "item:ビール": {
-    "name": "ビール",
-    "count": 3,
-    "limit": 2,
-    "createdAt": 1234567891
-  }
-}
-*/

@@ -5,7 +5,7 @@ import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import { registerHandleCount } from "./ipc/count";
 
-// 純粋なNodejsの世界
+// 純粋なNodejs
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -60,18 +60,6 @@ app.whenReady().then(() => {
       message: message,
       detail: ""
     });
-  });
-
-  ipcMain.handle("show-confirm-box", async (_e, message: string) => {
-    const win = BrowserWindow.getFocusedWindow();
-    const { response } = await dialog.showMessageBox(win!, {
-      type: "question",
-      buttons: ["はい", "いいえ"],
-      defaultId: 1,
-      cancelId: 1,
-      message
-    });
-    return response === 0;
   });
 
   ipcMain.on("quit-app", () => {

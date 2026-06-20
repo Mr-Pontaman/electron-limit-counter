@@ -1,7 +1,8 @@
 import { resolve } from "path";
 import { defineConfig } from "electron-vite";
-import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
+import babel from "@rolldown/plugin-babel";
 
 export default defineConfig({
   main: {},
@@ -20,6 +21,12 @@ export default defineConfig({
       }
     },
     // Work around duplicated Vite type identities in pnpm peer resolution.
-    plugins: [react(), ...(tailwindcss() as unknown as [])]
+    plugins: [
+      react(),
+      ...(tailwindcss() as unknown as []),
+      babel({
+        presets: [reactCompilerPreset()]
+      })
+    ]
   }
 });
