@@ -98,6 +98,7 @@ export const registerHandleCount = () => {
     const lastReset =
       typeof data[META_LAST_RESET_KEY] === "string" ? data[META_LAST_RESET_KEY] : "";
 
+    // すでに今日リセットされていればそのまま返す
     if (lastReset === today) {
       return data;
     }
