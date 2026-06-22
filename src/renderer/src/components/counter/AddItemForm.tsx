@@ -1,17 +1,19 @@
-import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { X } from "lucide-react";
 import { cn } from "@renderer/lib/utils";
 
 type AddItemFormProps = {
   value: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
-  isAlarmOn: boolean;
-  t: (key: string) => string;
+  disabled: boolean;
 };
 
-export const AddItemForm = ({ value, onChange, onSubmit, isAlarmOn, t }: AddItemFormProps) => {
+export const AddItemForm = ({ value, onChange, onSubmit, disabled }: AddItemFormProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="grid gap-2">
       <h2 className="text-lg font-semibold">{t("counter.addItem")}</h2>
@@ -24,11 +26,9 @@ export const AddItemForm = ({ value, onChange, onSubmit, isAlarmOn, t }: AddItem
             onChange={(e) => onChange(e.target.value)}
             placeholder={t("counter.addPlaceholder")}
             onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                onSubmit();
-              }
+              if (e.key === "Enter") onSubmit();
             }}
-            disabled={isAlarmOn}
+            disabled={disabled}
           />
           <X
             className={cn(
@@ -38,7 +38,7 @@ export const AddItemForm = ({ value, onChange, onSubmit, isAlarmOn, t }: AddItem
             onClick={() => onChange("")}
           />
         </div>
-        <Button onClick={onSubmit} className="cursor-pointer" disabled={!value.trim() || isAlarmOn}>
+        <Button onClick={onSubmit} className="cursor-pointer" disabled={!value.trim() || disabled}>
           {t("counter.addButton")}
         </Button>
       </div>

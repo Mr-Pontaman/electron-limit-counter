@@ -1,4 +1,4 @@
-## Daily Limit Counter
+# Daily Limit Counter
 
 <p align="center">
   <img src=".github/assets/app-pic1.png" alt="Limit Counter Screenshot" width="600">
@@ -15,8 +15,8 @@
 - **Multi-language Support (i18n)**: localized for global accessibility.
 - **history log**
 
+## Install
 
-### Install
 Linux / Windows
 
 - snap

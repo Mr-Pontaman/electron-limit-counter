@@ -1,12 +1,12 @@
-## Basic
+## Electron
 
 - renderer (React側):
-  - ブラウザはnodeは触れない。preloadの窓口（window.electronAPI.saveFile()）経由で叩く
-  - 経由のapiは補完の為に型定義をする。
+  - ブラウザはnodeは触れないので、preloadの窓口（window.electronAPI.saveFile()）経由で叩く
+    - 経由のapiは補完の為に型定義をする。
 - preload (窓口):
   - ブラウザから来た命令をnodeに送る（ipcRenderer.send）
 - main (Node.js側):
-  - fs.writeFileSync等でnode環境にアクセス
+  - fs.writeFileSync等でnode環境にアクセスできる。
 
 Next.jsでいうなら
 

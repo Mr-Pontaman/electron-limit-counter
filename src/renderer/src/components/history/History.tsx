@@ -1,19 +1,34 @@
 import { useEffect, useState } from "react";
-import { Bar, BarChart, CartesianGrid, ReferenceLine, XAxis, YAxis } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "./ui/chart";
-import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ReferenceLine,
+  XAxis,
+  YAxis
+} from "recharts";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig
+} from "../ui/chart";
+import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from "../ConfirmDialog";
 import type { DailyHistory } from "@renderer/types";
 import { toast } from "sonner";
+import { NoHistory } from "./NoHistory";
 
 const formatDate = (dateStr: string): string => {
   const parts = dateStr.split("-");
   return `${parseInt(parts[1])}/${parseInt(parts[2])}`;
 };
 
-const History = ({ t }: { t: (key: string) => string }) => {
+const History = () => {
+  const { t } = useTranslation();
   const [history, setHistory] = useState<DailyHistory>({});
   const [loading, setLoading] = useState(true);
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
@@ -47,12 +62,7 @@ const History = ({ t }: { t: (key: string) => string }) => {
   const allDates = Object.keys(history).sort().slice(-14);
 
   if (allDates.length === 0) {
-    return (
-      <div className="text-center py-16 text-muted-foreground">
-        <p className="text-lg">{t("history.noHistory")}</p>
-        <p className="text-sm mt-2">{t("history.checkLater")}</p>
-      </div>
-    );
+    return <NoHistory />;
   }
 
   const itemNames = [
@@ -131,7 +141,7 @@ const History = ({ t }: { t: (key: string) => string }) => {
                       strokeDasharray="5 3"
                       strokeWidth={1.5}
                       label={{
-                        value: (t as any)("history.limit", { value: latestLimit }),
+                        value: t("history.limit", { value: latestLimit }),
                         position: "insideTopRight",
                         fontSize: 11,
                         fill: "var(--chart-5)"

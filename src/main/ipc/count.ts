@@ -1,139 +1,24 @@
-import { app } from "electron";
-import { join } from "path";
+/**
+ * IPC ハンドラ — カウント操作
+ *
+ * データ永続化（store）と日次リセット（dailyReset）は別モジュールに分離済み。
+ */
 import fs from "fs";
 import { ipcMain } from "electron";
 import { itemNameSchema, itemSchema, limitSchema } from "../schemas";
-
-// new Notification({
-//   body: `get-count for ${target ?? "Item"}, current counts: ${data[target] ?? 0}`,
-//   title: "Debug Notification"
-// }).show();
-
-interface Item {
-  name: string;
-  count: number;
-  limit: number;
-  createdAt: number;
-}
-
-/*
-JSON Storage Format:
-{
-  "item:ビール": {
-    "name": "ビール",
-    "count": 3,
-    "limit": 2,
-    "createdAt": 1234567891
-  }
-}
-*/
-
-type StoredValue = number | string | Item;
-type DataStore = Record<string, StoredValue>;
-
-interface HistoryEntry {
-  name: string;
-  count: number;
-  limit: number;
-}
-
-type HistoryStore = Record<string, HistoryEntry[]>;
+import { loadData, saveData, loadHistory, HISTORY_PATH } from "../store";
+import { ensureDailyReset } from "../dailyReset";
+import { Item } from "../../shared/types";
 
 export const registerHandleCount = () => {
-  const dataPath = join(app.getPath("userData"), "log.json");
-  const historyPath = join(app.getPath("userData"), "history.json");
-  const META_LAST_RESET_KEY = "__meta:lastResetDate";
-
-  const getLocalDateKey = (): string => {
-    const now = new Date();
-    const yyyy = now.getFullYear();
-    const mm = String(now.getMonth() + 1).padStart(2, "0");
-    const dd = String(now.getDate()).padStart(2, "0");
-    return `${yyyy}-${mm}-${dd}`;
-  };
-
-  const isItem = (value: StoredValue): value is Item => {
-    return typeof value === "object" && value !== null && "name" in value && "count" in value;
-  };
-
-  const loadData = (): DataStore => {
-    if (!fs.existsSync(dataPath)) {
-      return {};
-    }
-    const raw = fs.readFileSync(dataPath, "utf-8");
-    return JSON.parse(raw);
-  };
-
-  const saveData = (data: DataStore) => {
-    fs.writeFileSync(dataPath, JSON.stringify(data, null, 2), "utf-8");
-  };
-
-  const loadHistory = (): HistoryStore => {
-    if (!fs.existsSync(historyPath)) {
-      return {};
-    }
-    const raw = fs.readFileSync(historyPath, "utf-8");
-    return JSON.parse(raw) as HistoryStore;
-  };
-
-  const saveHistory = (history: HistoryStore) => {
-    fs.writeFileSync(historyPath, JSON.stringify(history, null, 2), "utf-8");
-  };
-
-  const archiveDayToHistory = (data: DataStore, date: string) => {
-    const entries: HistoryEntry[] = [];
-    for (const [, value] of Object.entries(data)) {
-      if (isItem(value)) {
-        entries.push({ name: value.name, count: value.count, limit: value.limit });
-      }
-    }
-    if (entries.length === 0) return;
-    const history = loadHistory();
-    history[date] = entries;
-    saveHistory(history);
-  };
-
-  const ensureDailyReset = (data: DataStore): DataStore => {
-    const today = getLocalDateKey();
-    const lastReset =
-      typeof data[META_LAST_RESET_KEY] === "string" ? data[META_LAST_RESET_KEY] : "";
-
-    // すでに今日リセットされていればそのまま返す
-    if (lastReset === today) {
-      return data;
-    }
-
-    // リセット前に昨日のデータを履歴に保存
-    if (lastReset !== "") {
-      archiveDayToHistory(data, lastReset);
-    }
-
-    for (const [key, value] of Object.entries(data)) {
-      if (isItem(value)) {
-        value.count = 0;
-        continue;
-      }
-
-      if (typeof value === "number" && !key.startsWith("limit:")) {
-        data[key] = 0;
-      }
-    }
-
-    data[META_LAST_RESET_KEY] = today;
-    saveData(data);
-    return data;
-  };
-
   ipcMain.handle("get-items", async () => {
     const data = ensureDailyReset(loadData());
     const items: Item[] = [];
-
     for (const [, value] of Object.entries(data)) {
-      if (isItem(value)) {
-        items.push(value);
+      if (typeof value === "object" && value !== null && "name" in value && "count" in value) {
+        items.push(value as Item);
       }
     }
-
     return items;
   });
 
@@ -158,7 +43,6 @@ export const registerHandleCount = () => {
 
     data[itemKey] = newItem;
     saveData(data);
-
     return { success: true, item: newItem };
   });
 
@@ -176,7 +60,6 @@ export const registerHandleCount = () => {
 
     delete data[itemKey];
     saveData(data);
-
     return { success: true };
   });
 
@@ -190,8 +73,7 @@ export const registerHandleCount = () => {
     const itemKey = `item:${targetItemName}`;
 
     if (itemKey in data) {
-      const item = data[itemKey] as Item;
-      return item.count;
+      return (data[itemKey] as Item).count;
     }
 
     return typeof data[target] === "number" ? data[target] : 0;
@@ -296,8 +178,8 @@ export const registerHandleCount = () => {
   });
 
   ipcMain.handle("delete-history", async () => {
-    if (fs.existsSync(historyPath)) {
-      fs.unlinkSync(historyPath);
+    if (fs.existsSync(HISTORY_PATH)) {
+      fs.unlinkSync(HISTORY_PATH);
     }
     return { success: true };
   });

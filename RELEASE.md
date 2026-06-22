@@ -1,22 +1,24 @@
-## Electron-vite 配布方法
+# Electron-vite 配布方法
 
-- A : ローカルで各OSに対応したものをビルド -> Releaseにdistのをドロップ
-  - \*build:win -> wine64 をPCにインストールする必要あり。これを避ける為に以下 B を利用
-- B : Github ActionsでTag or Releaseをトリガーにして配布
+- 方法A : ローカルで各OSに対応したものをビルド -> Releaseにdistの内容をドロップ
+  - \*build:win -> wine64 をPCにインストールしないとビルドできない。
+- 方法B : Github ActionsでTag or Releaseをトリガーにして配布
   - \*SnapのuploadをActionsで行う際に stable としてuploadする方法がわからず。
-  - そのため stable へのupdateはsnapcraft.ioかターミナルから行う。
+  - そのため stable へのupdateはsnapcraft.ioかターミナルで行う。
 
-snapのupdateの為に snapcraft-store の認証が必要
+snapのupdateには snapcraft-store の認証が必要
 
 ```
 snapcraft export-login credentials.txt
 ```
 
-- 生成されたものはリポジトリの環境変数に追加
-- このリポジトリでは`SNAPCRAFT_STORE_CREDENTIALS`
+- 生成されたものはGithubリポジトリの設定から環境変数に追加
+  - このリポジトリでは`SNAPCRAFT_STORE_CREDENTIALS`という名前
 
-### 流れ
+## Updateの流れ
 
-1. ローカルでコード変更 -> push / merge
-2. `git tag v1.1.0` & `git push origin v1.1.0`　<- タグの作成（Github Actionsが走る）
-3. snapcraft.ioかターミナルからsnapをstableへpromote
+俺が行う事
+
+1. ローカルでコード変更 -> Githubへ push / merge
+2. ローカルでコマンド実行 : `git tag v1.1.0` & `git push origin v1.1.0`　<- タグの作成（これによりGithub Actionsが走る）
+3. snapcraft.io or ターミナルからsnapをstableへpromoteさせる。

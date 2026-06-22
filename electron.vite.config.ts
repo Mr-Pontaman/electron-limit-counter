@@ -23,7 +23,7 @@ export default defineConfig({
     // Work around duplicated Vite type identities in pnpm peer resolution.
     plugins: [
       react(),
-      ...(tailwindcss() as unknown as []),
+      tailwindcss(),
       babel({
         presets: [reactCompilerPreset()]
       })

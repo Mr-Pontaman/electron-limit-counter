@@ -1,34 +1,14 @@
-import { ElectronAPI } from "@electron-toolkit/preload";
+import type { Item, HistoryEntry, DailyHistory, MutationResult, ItemMutationResult } from "../../shared/types";
 
-interface Item {
-  name: string;
-  count: number;
-  limit: number;
-  createdAt: number;
-}
-
-interface ItemMutationResult {
-  success: boolean;
-  error?: string;
-  item?: Item;
-}
-
-interface MutationResult {
-  success: boolean;
-  error?: string;
-}
-
-interface HistoryEntry {
-  name: string;
-  count: number;
-  limit: number;
-}
-
-type DailyHistory = Record<string, HistoryEntry[]>;
-
+/**
+ * Electron API 拡張 + IPC 経由のカスタム API
+ *
+ * レンダラープロセスで window.api を通じて利用する型定義。
+ * メインプロセスとの通信インターフェースをここで宣言する。
+ */
 interface CustomAPI {
   alertOnce: (message: string) => Promise<unknown>;
-  // Ubuntuだと日本語は豆腐になるので英語だけ渡す。
+  /** Ubuntuだと日本語は豆腐になるので英語だけ渡す。 */
   showMessageBox: (message: string) => Promise<void>;
   getCount: (target: string) => Promise<number>;
   incrementCount: (target: string) => Promise<number>;
@@ -45,7 +25,6 @@ interface CustomAPI {
 
 declare global {
   interface Window {
-    electron: ElectronAPI;
     api: CustomAPI;
   }
 }
