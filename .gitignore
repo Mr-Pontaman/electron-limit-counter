@@ -21,9 +21,8 @@ Thumbs.db
 *.tsbuildinfo
 *.log*
 .env*
-.deepseek
 
 # Agent / Personal tooling
-
+.deepseek
 # Git
 .git
