@@ -30,6 +30,9 @@
     "count": "Count",
     "deleteHistory": "Delete History",
     "deleteHistoryConfirm": "Are you sure you want to delete all history?",
-    "deleteFailed": "Failed to delete history"
+    "deleteFailed": "Failed to delete history",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "jumpToCurrent": "Jump to current month"
   }
 }

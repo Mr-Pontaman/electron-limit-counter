@@ -30,6 +30,9 @@
     "count": "回数",
     "deleteHistory": "履歴を削除",
     "deleteHistoryConfirm": "全ての履歴を削除してもよろしいですか？",
-    "deleteFailed": "削除に失敗しました"
+    "deleteFailed": "削除に失敗しました",
+    "prevMonth": "前の月",
+    "nextMonth": "次の月",
+    "jumpToCurrent": "現在の月に戻る"
   }
 }
