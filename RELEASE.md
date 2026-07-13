@@ -6,6 +6,8 @@
   - \*SnapのuploadをActionsで行う際に stable としてuploadする方法がわからず。
   - そのため stable へのupdateはsnapcraft.ioかターミナルで行う。
 
+## snap-craft
+
 snapのupdateには snapcraft-store の認証が必要
 
 ```

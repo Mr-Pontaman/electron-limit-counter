@@ -1,6 +1,6 @@
 {
   "name": "limit-counter",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Daily limit counter application",
   "main": "./out/main/index.js",
   "author": "Mr.Pontaman",
@@ -71,13 +71,5 @@
     "react-dom": "^19.2.6",
     "typescript": "^6.0.3",
     "vite": "^8.0.14"
-  },
-  "onlyBuiltDependencies": [
-    "electron",
-    "esbuild"
-  ],
-  "packageManager": "pnpm@10.20.0",
-  "engines": {
-    "node": ">=24.0.0"
   }
 }

@@ -30,6 +30,9 @@
     "count": "次数",
     "deleteHistory": "删除历史",
     "deleteHistoryConfirm": "确定要删除全部历史记录吗？",
-    "deleteFailed": "删除历史失败"
+    "deleteFailed": "删除历史失败",
+    "prevMonth": "上个月",
+    "nextMonth": "下个月",
+    "jumpToCurrent": "回到当前月"
   }
 }

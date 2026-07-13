@@ -30,6 +30,9 @@
     "count": "Cantidad",
     "deleteHistory": "Eliminar historial",
     "deleteHistoryConfirm": "¿Seguro que quieres eliminar todo el historial?",
-    "deleteFailed": "Error al eliminar el historial"
+    "deleteFailed": "Error al eliminar el historial",
+    "prevMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "jumpToCurrent": "Ir al mes actual"
   }
 }
