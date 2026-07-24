@@ -24,5 +24,6 @@ Thumbs.db
 
 # Agent / Personal tooling
 .deepseek
+.codewhale
 # Git
 .git
