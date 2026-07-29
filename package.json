@@ -3,7 +3,8 @@
   "version": "1.4.6",
   "description": "Daily limit counter application",
   "main": "./out/main/index.js",
-  "author": "Mr.Pontaman",
+  "author": "Mr-Pontaman",
+  "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
