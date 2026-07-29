@@ -19,9 +19,9 @@
 
 Linux / Windows
 
-- snap
-
-[![Get from the Snap Store](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/limit-counter)
-
 - `.deb` , `.exe`
   - [Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page
+
+  ```
+  sudo apt install ./limit-counter_{version}_amd64.deb
+  ```

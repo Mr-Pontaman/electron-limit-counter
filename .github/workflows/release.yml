@@ -41,10 +41,6 @@ jobs:
       - name: Build app
         run: pnpm run build
 
-      - name: Install Snapcraft
-        if: runner.os == 'Linux'
-        run: sudo snap install snapcraft --classic
-
       - name: Package Windows
         if: runner.os == 'Windows'
         run: pnpm exec electron-builder --win --publish never
@@ -52,8 +48,6 @@ jobs:
       - name: Package Linux
         if: runner.os == 'Linux'
         run: pnpm exec electron-builder --linux --publish never
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
@@ -62,7 +56,6 @@ jobs:
           path: |
             dist/*.exe
             dist/*.AppImage
-            dist/*.snap
             dist/*.deb
             dist/*.dmg
           if-no-files-found: ignore
