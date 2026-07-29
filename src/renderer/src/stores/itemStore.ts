@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Item } from "@renderer/types";
+import { Item } from "../../../shared/types";
 
 interface ItemState {
   items: Item[];
@@ -60,9 +60,7 @@ export const useItemStore = create<ItemState>((set, get) => ({
       set((state) => ({
         items: state.items.map((i) => (i.name === name ? { ...i, count: newCount } : i))
       }));
-    } catch {
-      /* silent */
-    }
+    } catch {}
   },
 
   decrementCount: async (name: string) => {
@@ -71,9 +69,7 @@ export const useItemStore = create<ItemState>((set, get) => ({
       set((state) => ({
         items: state.items.map((i) => (i.name === name ? { ...i, count: newCount } : i))
       }));
-    } catch {
-      /* silent */
-    }
+    } catch {}
   },
 
   setLimit: async (name: string, limit: number) => {

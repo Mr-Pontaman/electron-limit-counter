@@ -1,17 +1,10 @@
-/**
- * 日次リセット & 履歴アーカイブ
- */
 import type { DataStore, HistoryEntry, StoredValue } from "../shared/types";
 import type { Item } from "../shared/types";
 import { loadHistory, saveHistory, saveData, META_LAST_RESET_KEY } from "./store";
 
-// ---- 型ガード ----
-
 export const isItem = (value: StoredValue): value is Item => {
   return typeof value === "object" && value !== null && "name" in value && "count" in value;
 };
-
-// ---- ユーティリティ ----
 
 export const getLocalDateKey = (): string => {
   const now = new Date();
@@ -20,8 +13,6 @@ export const getLocalDateKey = (): string => {
   const dd = String(now.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 };
-
-// ---- 履歴アーカイブ ----
 
 export const archiveDayToHistory = (data: DataStore, date: string): void => {
   const entries: HistoryEntry[] = [];
@@ -36,12 +27,9 @@ export const archiveDayToHistory = (data: DataStore, date: string): void => {
   saveHistory(history);
 };
 
-// ---- 日次リセット ----
-
 export const ensureDailyReset = (data: DataStore): DataStore => {
   const today = getLocalDateKey();
-  const lastReset =
-    typeof data[META_LAST_RESET_KEY] === "string" ? data[META_LAST_RESET_KEY] : "";
+  const lastReset = typeof data[META_LAST_RESET_KEY] === "string" ? data[META_LAST_RESET_KEY] : "";
 
   if (lastReset === today) {
     return data;

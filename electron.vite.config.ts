@@ -20,7 +20,6 @@ export default defineConfig({
         "@renderer": resolve("src/renderer/src")
       }
     },
-    // Work around duplicated Vite type identities in pnpm peer resolution.
     plugins: [
       react(),
       tailwindcss(),

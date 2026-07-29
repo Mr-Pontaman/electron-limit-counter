@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import alarmMp3 from "../assets/white-noise.mp3";
-import type { Item } from "@renderer/types";
-
-// ---- ユーティリティ（モジュールスコープ） ----
+import { Item } from "../../../shared/types";
 
 type CountSnapshot = { name: string; count: number };
 
@@ -16,7 +14,6 @@ const hasNewExceeded = (items: Item[], prev: Map<string, number>): boolean =>
     return prevCount !== undefined && item.count > prevCount;
   });
 
-// Audioインスタンスは1度だけ生成（モジュールスコープ）
 let audioEl: HTMLAudioElement | null = null;
 const getAudio = (): HTMLAudioElement => {
   if (!audioEl) {
@@ -27,12 +24,9 @@ const getAudio = (): HTMLAudioElement => {
   return audioEl;
 };
 
-// 前回スナップショット & 超過済みフラグ（モジュールスコープ）
 let prevSnapshot: CountSnapshot[] = [];
 let prevCounts = new Map<string, number>();
 let alarmTriggered = false;
-
-// ---- Store ----
 
 interface AlarmState {
   isAlarmOn: boolean;
@@ -46,7 +40,6 @@ export const useAlarmStore = create<AlarmState>((set) => ({
   checkItems: (items: Item[]) => {
     const snapshot = toSnapshot(items);
 
-    // 前回と同じなら何もしない
     if (
       prevSnapshot.length === snapshot.length &&
       prevSnapshot.every((s, i) => s.name === snapshot[i].name && s.count === snapshot[i].count)
@@ -56,7 +49,6 @@ export const useAlarmStore = create<AlarmState>((set) => ({
 
     prevSnapshot = snapshot;
 
-    // 新規超過検出（1回限り）
     if (hasNewExceeded(items, prevCounts) && !alarmTriggered) {
       alarmTriggered = true;
       set({ isAlarmOn: true });
