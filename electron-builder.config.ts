@@ -41,9 +41,19 @@ const config: Configuration = {
     artifactName: "${name}-${version}.${ext}"
   },
   linux: {
-    target: ["AppImage", "snap", "deb"],
+    target: [
+      {
+        target: "snap",
+        arch: ["x64"]
+      },
+      "AppImage",
+      "deb"
+    ],
     maintainer: GITHUB_USERNAME,
     category: "Utility"
+  },
+  snapcraft: {
+    base: "core22"
   },
   appImage: {
     artifactName: "${name}-${version}.${ext}"
