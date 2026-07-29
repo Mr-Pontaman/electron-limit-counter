@@ -1,3 +1,5 @@
 provider: generic
 url: https://example.com/auto-updates
 updaterCacheDirName: test-updater
+
+# 開発環境で electron-updater のテストをするためのファイル
