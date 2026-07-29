@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Card, CardContent, CardFooter } from "../ui/card";
-import type { Item } from "@renderer/types";
+import { Item } from "../../../../shared/types";
 
 type ItemCardProps = {
   item: Item;

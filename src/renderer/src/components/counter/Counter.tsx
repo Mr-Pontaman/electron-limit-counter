@@ -11,22 +11,28 @@ import { ItemCard } from "./ItemCard";
 
 const Counter = () => {
   const { t } = useTranslation();
-  const { items, loading, error, loadItems, addItem, deleteItem, incrementCount, decrementCount, setLimit } =
-    useItemStore();
+  const {
+    items,
+    loading,
+    error,
+    loadItems,
+    addItem,
+    deleteItem,
+    incrementCount,
+    decrementCount,
+    setLimit
+  } = useItemStore();
   const { isAlarmOn, checkItems, stopAlarmAndHide } = useAlarmStore();
 
-  // ---- 初回ロード ----
   useEffect(() => {
     void loadItems();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ---- アラーム検出 ----
+  // アラーム検出
   useEffect(() => {
     checkItems(items);
   }, [items, checkItems]);
 
-  // ---- ダイアログ状態（ローカル） ----
   const [newItemName, setNewItemName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [dialogKey, setDialogKey] = useState(0);
@@ -34,7 +40,6 @@ const Counter = () => {
   const [confirmKey, setConfirmKey] = useState(0);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
 
-  // ---- ハンドラ ----
   const handleAlarmClick = () => {
     setDialogKey((k) => k + 1);
     setIsDialogOpen(true);
@@ -89,7 +94,6 @@ const Counter = () => {
     void setLimit(itemName, newLimit);
   };
 
-  // ---- レンダリング ----
   if (error) {
     return <div className="p-4 text-center text-red-500 font-medium">Error loading items</div>;
   }
@@ -121,7 +125,12 @@ const Counter = () => {
         onCancel={() => handleDeleteRequest(null)}
       />
       <AlarmButton isVisible={isAlarmOn} onClick={handleAlarmClick} />
-      <AddItemForm value={newItemName} onChange={setNewItemName} onSubmit={handleAddItem} disabled={isAlarmOn} />
+      <AddItemForm
+        value={newItemName}
+        onChange={setNewItemName}
+        onSubmit={handleAddItem}
+        disabled={isAlarmOn}
+      />
       {items.length === 0 ? (
         <div className="text-center py-8 text-gray-500">{t("counter.noItems")}</div>
       ) : (

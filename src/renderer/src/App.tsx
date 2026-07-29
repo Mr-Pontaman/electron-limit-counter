@@ -2,6 +2,7 @@ import { useState } from "react";
 import Counter from "./components/counter/Counter";
 import History from "./components/history/History";
 import Header from "./components/layout/Header";
+
 export type PageType = "home" | "history";
 
 function App(): React.JSX.Element {

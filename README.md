@@ -21,7 +21,7 @@ Linux / Windows
 
 - snap
 
-[![Get it from the Snap Store](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/limit-counter)
+[![Get from the Snap Store](https://snapcraft.io/en/dark/install.svg)](https://snapcraft.io/limit-counter)
 
-- .deb , .exe
+- `.deb` , `.exe`
   - [Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page

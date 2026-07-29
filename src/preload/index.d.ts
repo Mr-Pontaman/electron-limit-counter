@@ -1,14 +1,20 @@
-import type { Item, HistoryEntry, DailyHistory, MutationResult, ItemMutationResult } from "../../shared/types";
+import type {
+  Item,
+  HistoryEntry,
+  DailyHistory,
+  MutationResult,
+  ItemMutationResult
+} from "../../shared/types";
 
-/**
- * Electron API 拡張 + IPC 経由のカスタム API
- *
- * レンダラープロセスで window.api を通じて利用する型定義。
- * メインプロセスとの通信インターフェースをここで宣言する。
- */
+declare global {
+  interface Window {
+    api: CustomAPI;
+  }
+}
+
+// レンダラープロセスで window.api を通じて利用する型 - メインプロセスとの通信インターフェースをここで宣言する。
 interface CustomAPI {
-  alertOnce: (message: string) => Promise<unknown>;
-  /** Ubuntuだと日本語は豆腐になるので英語だけ渡す。 */
+  /** Ubuntuだと日本語は豆腐になるので英語だけ渡すこと */
   showMessageBox: (message: string) => Promise<void>;
   getCount: (target: string) => Promise<number>;
   incrementCount: (target: string) => Promise<number>;
@@ -21,10 +27,4 @@ interface CustomAPI {
   getHistory: () => Promise<DailyHistory>;
   deleteHistory: () => Promise<MutationResult>;
   quitApp: () => void;
-}
-
-declare global {
-  interface Window {
-    api: CustomAPI;
-  }
 }

@@ -1,12 +1,8 @@
-/**
- * IPC ハンドラ — アプリ全体の操作
- *
- * index.ts から分離した show-message-box / quit-app を集約。
- */
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { IPC_CHANNELS } from "../../shared/ipc-channels";
 
 export const registerHandleApp = () => {
-  ipcMain.handle("show-message-box", async (_e, message: string) => {
+  ipcMain.handle(IPC_CHANNELS.SHOW_MESSAGE_BOX, async (_e, message: string) => {
     const win = BrowserWindow.getFocusedWindow();
     await dialog.showMessageBox(win!, {
       type: "info",
@@ -16,7 +12,7 @@ export const registerHandleApp = () => {
     });
   });
 
-  ipcMain.on("quit-app", () => {
+  ipcMain.on(IPC_CHANNELS.QUIT_APP, () => {
     app.quit();
   });
 };

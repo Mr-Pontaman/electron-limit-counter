@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "../ui/chart";
 import { Button } from "../ui/button";
 import { ConfirmDialog } from "../ConfirmDialog";
-import type { DailyHistory } from "@renderer/types";
 import { toast } from "sonner";
 import { NoHistory } from "./NoHistory";
+import { DailyHistory } from "../../../../shared/types";
 
 const formatDate = (dateStr: string): string => {
   const parts = dateStr.split("-");
@@ -161,7 +161,7 @@ const History = () => {
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
-                <span className="text-sm font-medium min-w-[120px] text-center select-none">
+                <span className="text-sm font-medium min-w-30 text-center select-none">
                   {monthLabel}
                 </span>
                 <Button
