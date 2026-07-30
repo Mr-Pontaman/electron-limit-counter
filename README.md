@@ -22,6 +22,6 @@ Linux / Windows
 - `.deb` , `.exe`
   - [Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page
 
-  ```
-  sudo apt install ./limit-counter_{version}_amd64.deb
-  ```
+```
+sudo apt install ./limit-counter_*_amd64.deb
+```
