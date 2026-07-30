@@ -30,6 +30,9 @@
     "count": "Anzahl",
     "deleteHistory": "Verlauf löschen",
     "deleteHistoryConfirm": "Möchtest du den gesamten Verlauf wirklich löschen?",
-    "deleteFailed": "Löschen fehlgeschlagen"
+    "deleteFailed": "Löschen fehlgeschlagen",
+    "prevMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat",
+    "jumpToCurrent": "Zum aktuellen Monat springen"
   }
 }

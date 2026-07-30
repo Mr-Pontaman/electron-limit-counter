@@ -193,6 +193,7 @@
     @apply bg-background text-foreground;
   }
 }
+
 *,
 *::before,
 *::after {
