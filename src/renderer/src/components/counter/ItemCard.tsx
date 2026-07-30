@@ -1,9 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { Minus, Plus, Settings, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { Item } from "@renderer/types";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import { Item } from "../../../../shared/types";
 
 type ItemCardProps = {
   item: Item;
@@ -12,7 +13,6 @@ type ItemCardProps = {
   onSetLimit: (itemName: string, newLimit: number) => void;
   onDelete: (itemName: string) => void;
   isAlarmOn: boolean;
-  t: (key: string) => string;
 };
 
 export const ItemCard = ({
@@ -21,9 +21,9 @@ export const ItemCard = ({
   onDecrement,
   onSetLimit,
   onDelete,
-  isAlarmOn,
-  t
+  isAlarmOn
 }: ItemCardProps) => {
+  const { t } = useTranslation();
   const isExceeded = item.count > item.limit;
 
   return (
@@ -31,7 +31,6 @@ export const ItemCard = ({
       <CardContent className="flex items-center justify-between gap-4">
         <div className="space-y-2">
           <h3 className="text-3xl font-semibold tracking-tight">{item.name}</h3>
-
           <div className="flex items-center gap-2 pl-2">
             <span className="text-3xl font-bold">{item.count}</span>
             <span className="text-2xl text-muted-foreground">/ {item.limit}</span>
@@ -42,7 +41,6 @@ export const ItemCard = ({
             )}
           </div>
         </div>
-
         <div className="flex gap-2">
           <Button
             onClick={() => onDecrement(item.name)}
@@ -62,7 +60,6 @@ export const ItemCard = ({
           </Button>
         </div>
       </CardContent>
-
       <CardFooter className="flex justify-end">
         <DropdownMenu>
           <DropdownMenuTrigger asChild disabled={isAlarmOn}>

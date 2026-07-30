@@ -15,6 +15,7 @@ const MAX_OFFSET_Y = 45; // Y方向の最大逃げ幅
 
 export const AlertDialog = ({ open, onClose, title, message }: DialogProps) => {
   const [offset, setOffset] = useState({ x: 0, y: 0 });
+
   const currentOffset = useRef({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
 
