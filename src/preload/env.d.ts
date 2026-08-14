@@ -1,3 +1,4 @@
+import type { ElectronAPI } from "@electron-toolkit/preload";
 import type {
   Item,
   HistoryEntry,
@@ -8,6 +9,7 @@ import type {
 
 declare global {
   interface Window {
+    electron: ElectronAPI;
     api: CustomAPI;
   }
 }

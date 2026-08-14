@@ -5,7 +5,7 @@ import Header from "./components/layout/Header";
 
 export type PageType = "home" | "history";
 
-function App(): React.JSX.Element {
+const App = (): React.JSX.Element => {
   const [page, setPage] = useState<PageType>("home");
 
   return (
@@ -14,6 +14,6 @@ function App(): React.JSX.Element {
       {page === "home" ? <Counter /> : page === "history" ? <History /> : null}
     </>
   );
-}
+};
 
 export default App;
