@@ -5,7 +5,7 @@ import icon from "../../resources/icon.png?asset";
 import { registerHandleCount } from "./ipc/count";
 import { registerHandleApp } from "./ipc/app";
 
-function createWindow(): void {
+const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -34,7 +34,7 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
-}
+};
 
 app.whenReady().then(() => {
   electronApp.setAppUserModelId("com.electron");
@@ -47,7 +47,7 @@ app.whenReady().then(() => {
   createWindow();
   registerHandleCount();
 
-  app.on("activate", function () {
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
