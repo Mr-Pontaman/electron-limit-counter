@@ -20,7 +20,11 @@ Thumbs.db
 .eslintcache
 *.tsbuildinfo
 *.log*
-.env*
+
+# env files (can opt-in for committing if needed)
+.env.local
+.env.development
+.env*.local
 
 # Agent / Personal tooling
 .deepseek
