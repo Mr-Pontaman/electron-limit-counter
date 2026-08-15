@@ -8,6 +8,7 @@ on:
       - "electron/**"
       - "package.json"
       - ".github/workflows/**"
+      - "snap/**"
   workflow_dispatch:
 
 jobs:
@@ -59,6 +60,48 @@ jobs:
             dist/*.deb
             dist/*.dmg
           if-no-files-found: ignore
+
+  snap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build app
+        run: pnpm run build
+
+      - name: Build unpacked Linux app
+        run: pnpm exec electron-builder --dir --config electron-builder.config.ts
+
+      - name: Sync snap version from package.json
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          sed -i "s/^version:.*/version: '${VERSION}'/" snap/snapcraft.yaml
+
+      - name: Build snap
+        id: snapcraft
+        uses: snapcore/action-build@v1
+
+      - name: Publish to Snap Store (edge)
+        uses: snapcore/action-publish@v1
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        with:
+          snap: ${{ steps.snapcraft.outputs.snap }}
+          release: edge
 
   release:
     needs: build

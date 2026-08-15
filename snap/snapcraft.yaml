@@ -1,0 +1,29 @@
+name: limit-counter
+base: core24
+confinement: strict
+grade: stable
+version: '1.4.6'
+summary: Limit Counter
+description: |
+  Daily limit counter application.
+
+  An app designed to manage and track your daily consumption of indulgences, such as alcohol and tobacco.
+
+icon: snap/gui/limit-counter.png
+
+environment:
+  TMPDIR: $XDG_RUNTIME_DIR
+
+parts:
+  limit-counter:
+    plugin: dump
+    source: dist/linux-unpacked
+
+apps:
+  limit-counter:
+    command: limit-counter --no-sandbox
+    plugs:
+      - browser-support
+    desktop: meta/gui/limit-counter.desktop
+    extensions:
+      - gnome
