@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Limit Counter
+Exec=limit-counter %U
+Terminal=false
+Type=Application
+Icon=${SNAP}/meta/gui/limit-counter.png
+StartupWMClass=limit-counter
+Comment=Daily limit counter application
+Categories=Utility;

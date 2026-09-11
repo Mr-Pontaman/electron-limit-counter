@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+out/
+
+# snap
+snap/prime/
+snap/stage/
+snap/parts/
+snap/.snapcraft/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Tooling / Cache
+.eslintcache
+*.tsbuildinfo
+*.log*
+.pnpm-store/
+
+# Test
+coverage/
+
+# env files (can opt-in for committing if needed)
+.env.local
+.env.development
+.env*.local
+
+# Agent / Personal tooling
+.deepseek
+.codewhale
