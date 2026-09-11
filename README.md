@@ -17,16 +17,21 @@
 
 ## Install
 
-Linux : `.deb` , `AppImage`
+### Linux
 
-Windows : `.exe`
-
-[Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page
+- `.deb` , `AppImage`
+  - [Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page
 
 ```
+// install .dev
+
 sudo apt install ./limit-counter_*_amd64.deb
 ```
 
-Snap : 
+- Snap
+- [Snap Store](https://snapcraft.io/limit-counter)
 
-https://snapcraft.io/limit-counter
+### Windows
+
+- `.exe`
+  - [Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page
