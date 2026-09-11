@@ -9,7 +9,7 @@
   },
   "counter": {
     "addItem": "アイテムを追加",
-    "addPlaceholder": "アイテム名を入力（例：タバコ、ビール）",
+    "addPlaceholder": "アイテム名を入力",
     "addButton": "追加",
     "noItems": "アイテムがありません。新規追加してください。",
     "addFailed": "追加に失敗しました",
