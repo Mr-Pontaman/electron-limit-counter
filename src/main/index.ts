@@ -2,11 +2,16 @@ import { app, shell, BrowserWindow } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
+import trayIcon from "../../resources/tray-32.png?asset";
 import { registerHandleCount } from "./ipc/count";
 import { registerHandleApp } from "./ipc/app";
+import { Menu, Tray } from "electron/main";
+
+let tray: Tray | null = null;
+let mainWindow: BrowserWindow | null = null;
 
 const createWindow = (): void => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -21,7 +26,7 @@ const createWindow = (): void => {
   });
 
   mainWindow.on("ready-to-show", () => {
-    mainWindow.show();
+    mainWindow?.show();
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -37,6 +42,32 @@ const createWindow = (): void => {
 };
 
 app.whenReady().then(() => {
+  tray = new Tray(trayIcon);
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: "Limit Counter",
+      icon: trayIcon,
+      enabled: false
+    },
+    {
+      type: "separator"
+    },
+    {
+      label: "Open",
+      click: () => {
+        mainWindow?.show();
+      }
+    },
+    {
+      type: "separator"
+    },
+    {
+      role: "quit"
+    }
+  ]);
+
+  tray.setContextMenu(contextMenu);
   electronApp.setAppUserModelId("com.electron");
 
   app.on("browser-window-created", (_, window) => {

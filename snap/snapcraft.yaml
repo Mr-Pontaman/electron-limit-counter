@@ -24,6 +24,7 @@ apps:
     command: limit-counter --no-sandbox
     plugs:
       - browser-support
+      - audio-playback
     desktop: meta/gui/limit-counter.desktop
     extensions:
       - gnome

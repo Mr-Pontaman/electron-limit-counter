@@ -17,18 +17,19 @@
 
 ## Install
 
+Tested and working on Ubuntu 24 and Windows 11.
+
 ### Linux
 
 - `.deb` , `AppImage`
   - [Releases](https://github.com/Mr-Pontaman/electron-limit-counter/releases) Page
 
-```
-// install .dev
-
-sudo apt install ./limit-counter_*_amd64.deb
-```
-
 - Snap
+
+```
+sudo snap install limit-counter
+```
+
 - [Snap Store](https://snapcraft.io/limit-counter)
 
 ### Windows
