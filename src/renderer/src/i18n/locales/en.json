@@ -1,7 +1,8 @@
 {
   "common": {
     "confirm": "Delete",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "save": "Save"
   },
   "nav": {
     "home": "Home",
@@ -16,11 +17,16 @@
     "deleteConfirm": "Are you sure you want to delete \"{{name}}\"?",
     "deleteFailed": "Failed to delete item",
     "tomorrowMessage": "Do better tomorrow!",
-    "decrementConfirm": "Really?"
+    "decrementConfirm": "Really?",
+    "renameTitle": "Rename item",
+    "renameDuplicate": "That name is already used",
+    "renameNotFound": "Item not found",
+    "renameFailed": "Failed to rename item"
   },
   "itemCard": {
     "limitExceeded": "Limit exceeded",
-    "dailyLimit": "Daily limit:"
+    "dailyLimit": "Daily limit:",
+    "rename": "Rename"
   },
   "history": {
     "loading": "Loading...",

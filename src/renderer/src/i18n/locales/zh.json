@@ -1,7 +1,8 @@
 {
   "common": {
     "confirm": "删除",
-    "cancel": "取消"
+    "cancel": "取消",
+    "save": "保存"
   },
   "nav": {
     "home": "主页",
@@ -16,11 +17,16 @@
     "deleteConfirm": "确定要删除 \"{{name}}\" 吗？",
     "deleteFailed": "删除失败",
     "tomorrowMessage": "明天加油！",
-    "decrementConfirm": "真的吗？"
+    "decrementConfirm": "真的吗？",
+    "renameTitle": "重命名项目",
+    "renameDuplicate": "该名称已被使用",
+    "renameNotFound": "找不到该项目",
+    "renameFailed": "重命名失败"
   },
   "itemCard": {
     "limitExceeded": "超出限制",
-    "dailyLimit": "每日限制:"
+    "dailyLimit": "每日限制:",
+    "rename": "重命名"
   },
   "history": {
     "loading": "加载中...",

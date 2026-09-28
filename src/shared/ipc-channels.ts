@@ -2,6 +2,7 @@ export const IPC_CHANNELS = {
   GET_ITEMS: "get-items",
   ADD_ITEM: "add-item",
   DELETE_ITEM: "delete-item",
+  RENAME_ITEM: "rename-item",
   GET_COUNT: "get-count",
   INCREMENT_COUNT: "increment-count",
   DECREMENT_COUNT: "decrement-count",

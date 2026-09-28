@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { Minus, Plus, Settings, Trash2 } from "lucide-react";
+import { Minus, Pencil, Plus, Settings, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
@@ -12,6 +12,7 @@ type ItemCardProps = {
   onDecrement: (itemName: string) => void;
   onSetLimit: (itemName: string, newLimit: number) => void;
   onDelete: (itemName: string) => void;
+  onRenameRequest: (itemName: string) => void;
   isAlarmOn: boolean;
 };
 
@@ -21,6 +22,7 @@ export const ItemCard = ({
   onDecrement,
   onSetLimit,
   onDelete,
+  onRenameRequest,
   isAlarmOn
 }: ItemCardProps) => {
   const { t } = useTranslation();
@@ -90,6 +92,16 @@ export const ItemCard = ({
                 <Trash2 className="w-4 h-4" />
               </Button>
             </div>
+            <Button
+              onClick={() => onRenameRequest(item.name)}
+              variant="ghost"
+              size="sm"
+              disabled={isAlarmOn}
+              className="mt-2 w-full justify-start gap-2 cursor-pointer"
+            >
+              <Pencil className="w-4 h-4" />
+              {t("itemCard.rename")}
+            </Button>
           </DropdownMenuContent>
         </DropdownMenu>
       </CardFooter>

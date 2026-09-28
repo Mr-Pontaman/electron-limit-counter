@@ -1,7 +1,8 @@
 {
   "common": {
     "confirm": "Löschen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "save": "Speichern"
   },
   "nav": {
     "home": "Startseite",
@@ -16,11 +17,16 @@
     "deleteConfirm": "Möchtest du \"{{name}}\" wirklich löschen?",
     "deleteFailed": "Löschen fehlgeschlagen",
     "tomorrowMessage": "Mach es morgen besser!",
-    "decrementConfirm": "Wirklich?"
+    "decrementConfirm": "Wirklich?",
+    "renameTitle": "Element umbenennen",
+    "renameDuplicate": "Dieser Name wird bereits verwendet",
+    "renameNotFound": "Element nicht gefunden",
+    "renameFailed": "Umbenennen fehlgeschlagen"
   },
   "itemCard": {
     "limitExceeded": "Limit überschritten",
-    "dailyLimit": "Tageslimit:"
+    "dailyLimit": "Tageslimit:",
+    "rename": "Umbenennen"
   },
   "history": {
     "loading": "Laden...",

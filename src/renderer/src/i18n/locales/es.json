@@ -1,7 +1,8 @@
 {
   "common": {
     "confirm": "Eliminar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "save": "Guardar"
   },
   "nav": {
     "home": "Inicio",
@@ -16,11 +17,16 @@
     "deleteConfirm": "¿Seguro que quieres eliminar \"{{name}}\"?",
     "deleteFailed": "Error al eliminar",
     "tomorrowMessage": "¡Hazlo mejor mañana!",
-    "decrementConfirm": "¿De verdad?"
+    "decrementConfirm": "¿De verdad?",
+    "renameTitle": "Cambiar el nombre del elemento",
+    "renameDuplicate": "Ese nombre ya está en uso",
+    "renameNotFound": "Elemento no encontrado",
+    "renameFailed": "No se pudo cambiar el nombre"
   },
   "itemCard": {
     "limitExceeded": "Límite superado",
-    "dailyLimit": "Límite diario:"
+    "dailyLimit": "Límite diario:",
+    "rename": "Cambiar nombre"
   },
   "history": {
     "loading": "Cargando...",
