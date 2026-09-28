@@ -35,6 +35,9 @@ if (process.contextIsolated) {
       deleteItem: async (itemName: string) => {
         return await ipcRenderer.invoke(IPC_CHANNELS.DELETE_ITEM, itemName);
       },
+      renameItem: async (oldName: string, newName: string) => {
+        return await ipcRenderer.invoke(IPC_CHANNELS.RENAME_ITEM, oldName, newName);
+      },
       getHistory: async () => {
         return await ipcRenderer.invoke(IPC_CHANNELS.GET_HISTORY);
       },

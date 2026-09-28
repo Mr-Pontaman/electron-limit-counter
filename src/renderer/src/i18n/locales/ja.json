@@ -1,7 +1,8 @@
 {
   "common": {
     "confirm": "削除",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "save": "保存"
   },
   "nav": {
     "home": "ホーム",
@@ -16,11 +17,16 @@
     "deleteConfirm": "\"{{name}}\" を削除してもよろしいですか？",
     "deleteFailed": "削除に失敗しました",
     "tomorrowMessage": "明日は頑張れよ！",
-    "decrementConfirm": "本当？"
+    "decrementConfirm": "本当？",
+    "renameTitle": "アイテム名を変更",
+    "renameDuplicate": "その名前は既に使われています",
+    "renameNotFound": "アイテムが見つかりません",
+    "renameFailed": "名前の変更に失敗しました"
   },
   "itemCard": {
     "limitExceeded": "制限超過",
-    "dailyLimit": "一日の制限数:"
+    "dailyLimit": "一日の制限数:",
+    "rename": "名前を変更"
   },
   "history": {
     "loading": "読み込み中...",

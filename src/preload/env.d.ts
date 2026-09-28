@@ -26,6 +26,7 @@ interface CustomAPI {
   getItems: () => Promise<Item[]>;
   addItem: (itemName: string) => Promise<ItemMutationResult>;
   deleteItem: (itemName: string) => Promise<ItemMutationResult>;
+  renameItem: (oldName: string, newName: string) => Promise<ItemMutationResult>;
   getHistory: () => Promise<DailyHistory>;
   deleteHistory: () => Promise<MutationResult>;
   quitApp: () => void;

@@ -7,3 +7,8 @@ export const itemSchema = z.object({
 });
 
 export const limitSchema = z.number().int().min(0).max(3000);
+
+export const renameSchema = z.object({
+  oldName: itemNameSchema,
+  newName: itemNameSchema
+});

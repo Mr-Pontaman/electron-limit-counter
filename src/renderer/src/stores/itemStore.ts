@@ -1,5 +1,8 @@
 import { create } from "zustand";
-import { Item } from "../../../shared/types";
+import { Item, MutationErrorCode } from "../../../shared/types";
+
+/** 失敗の理由をダイアログ側で出し分けたいので、boolean ではなく code を返す */
+export type RenameOutcome = { success: boolean; code?: MutationErrorCode };
 
 interface ItemState {
   items: Item[];
@@ -8,6 +11,7 @@ interface ItemState {
   loadItems: () => Promise<void>;
   addItem: (name: string) => Promise<boolean>;
   deleteItem: (name: string) => Promise<boolean>;
+  renameItem: (oldName: string, newName: string) => Promise<RenameOutcome>;
   incrementCount: (name: string) => Promise<void>;
   decrementCount: (name: string) => Promise<void>;
   setLimit: (name: string, limit: number) => Promise<boolean>;
@@ -51,6 +55,20 @@ export const useItemStore = create<ItemState>((set, get) => ({
       return false;
     } catch {
       return false;
+    }
+  },
+
+  // 名前は React の key でもあるので、局所更新せず全再読込する（addItem / deleteItem と同じ）
+  renameItem: async (oldName: string, newName: string) => {
+    try {
+      const result = await window.api.renameItem(oldName, newName);
+      if (result.success) {
+        await get().loadItems();
+        return { success: true };
+      }
+      return { success: false, code: result.code };
+    } catch {
+      return { success: false };
     }
   },
 
