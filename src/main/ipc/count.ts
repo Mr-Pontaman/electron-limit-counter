@@ -1,7 +1,7 @@
 import fs from "fs";
 import { ipcMain } from "electron";
-import { itemNameSchema, itemSchema, limitSchema } from "../schemas";
-import { loadData, saveData, loadHistory, HISTORY_PATH } from "../store";
+import { itemNameSchema, itemSchema, limitSchema, renameSchema } from "../schemas";
+import { loadData, saveData, loadHistory, saveHistory, HISTORY_PATH } from "../store";
 import { ensureDailyReset } from "../dailyReset";
 import { Item } from "../../shared/types";
 import { IPC_CHANNELS } from "../../shared/ipc-channels";
@@ -58,6 +58,66 @@ export const registerHandleCount = () => {
 
     saveData(newData);
     return { success: true };
+  });
+
+  // 名前は保存キーそのもの（item:<名前>）なので、リネームはキーの付け替えになる。
+  // 履歴は各エントリが名前を文字列で持っていて、履歴画面はその名前でグラフを描くので、
+  // ここで全期間を書き換えないとカードが新旧2枚に分裂する。
+  ipcMain.handle(IPC_CHANNELS.RENAME_ITEM, async (_e, oldName: string, newName: string) => {
+    const data = ensureDailyReset(loadData());
+    const parsed = renameSchema.safeParse({ oldName, newName });
+    if (!parsed.success) {
+      return { success: false, error: parsed.error.message, code: "invalid" };
+    }
+    const from = parsed.data.oldName;
+    const to = parsed.data.newName;
+    const fromKey = `item:${from}`;
+    const toKey = `item:${to}`;
+
+    // 変更なし。UI 側でも保存ボタンを無効にしているが、念のため
+    if (from === to) {
+      return { success: true, item: data[fromKey] as Item };
+    }
+
+    if (!(fromKey in data)) {
+      return { success: false, error: `Item "${from}" not found`, code: "not-found" };
+    }
+    // 移動先が埋まっていると既存アイテムを潰すので弾く。旧形式のベタ書きキーも見る
+    if (toKey in data || typeof data[to] === "number") {
+      return { success: false, error: `Item "${to}" already exists`, code: "duplicate" };
+    }
+
+    const renamed: Item = { ...(data[fromKey] as Item), name: to };
+    delete data[fromKey];
+    data[toKey] = renamed;
+
+    // 旧形式のキー（ベタ書きの数値カウンタ / limit:）も揃えて移す
+    if (typeof data[from] === "number") {
+      data[to] = data[from];
+      delete data[from];
+    }
+    if (`limit:${from}` in data) {
+      data[`limit:${to}`] = data[`limit:${from}`];
+      delete data[`limit:${from}`];
+    }
+
+    saveData(data);
+
+    const history = loadHistory();
+    let historyChanged = false;
+    for (const entries of Object.values(history)) {
+      for (const entry of entries) {
+        if (entry.name === from) {
+          entry.name = to;
+          historyChanged = true;
+        }
+      }
+    }
+    if (historyChanged) {
+      saveHistory(history);
+    }
+
+    return { success: true, item: renamed };
   });
 
   ipcMain.handle(IPC_CHANNELS.GET_COUNT, async (_e, target: string) => {

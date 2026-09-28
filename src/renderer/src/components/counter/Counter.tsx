@@ -5,6 +5,7 @@ import { useAlarmStore } from "@renderer/stores/alarmStore";
 import { toast } from "sonner";
 import { AlertDialog } from "../AlertDialog";
 import { ConfirmDialog } from "../ConfirmDialog";
+import { RenameDialog } from "../RenameDialog";
 import { AlarmButton } from "./AlarmButton";
 import { AddItemForm } from "./AddItemForm";
 import { ItemCard } from "./ItemCard";
@@ -19,6 +20,7 @@ const Counter = () => {
     loadItems,
     addItem,
     deleteItem,
+    renameItem,
     incrementCount,
     decrementCount,
     setLimit
@@ -41,6 +43,8 @@ const Counter = () => {
   const [confirmTarget, setConfirmTarget] = useState<string | null>(null);
   const [confirmKey, setConfirmKey] = useState(0);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [renameTarget, setRenameTarget] = useState<string | null>(null);
+  const [renameKey, setRenameKey] = useState(0);
 
   const handleAlarmClick = () => {
     setDialogKey((k) => k + 1);
@@ -96,6 +100,29 @@ const Counter = () => {
     void setLimit(itemName, newLimit);
   };
 
+  const handleRenameRequest = (itemName: string) => {
+    // 同じアイテムを開き直したときに前回の入力が残らないよう、都度マウントし直す
+    setRenameKey((k) => k + 1);
+    setRenameTarget(itemName);
+  };
+
+  const handleConfirmRename = async (newName: string) => {
+    const oldName = renameTarget;
+    setRenameTarget(null);
+    if (!oldName) return;
+
+    const result = await renameItem(oldName, newName);
+    if (!result.success) {
+      const messageKey =
+        result.code === "duplicate"
+          ? "counter.renameDuplicate"
+          : result.code === "not-found"
+            ? "counter.renameNotFound"
+            : "counter.renameFailed";
+      toast.error(t(messageKey));
+    }
+  };
+
   if (error) {
     return <div className="p-4 text-center text-red-500 font-medium">Error loading items</div>;
   }
@@ -126,6 +153,14 @@ const Counter = () => {
         onConfirm={handleConfirmDelete}
         onCancel={() => handleDeleteRequest(null)}
       />
+      <RenameDialog
+        key={`rename-${renameKey}`}
+        open={renameTarget !== null}
+        currentName={renameTarget ?? ""}
+        existingNames={items.map((item) => item.name)}
+        onConfirm={handleConfirmRename}
+        onCancel={() => setRenameTarget(null)}
+      />
       <AlarmButton isVisible={isAlarmOn} onClick={handleAlarmClick} />
       <AddItemForm
         value={newItemName}
@@ -145,6 +180,7 @@ const Counter = () => {
               onDecrement={handleDecrement}
               onSetLimit={handleSetLimit}
               onDelete={handleDeleteRequest}
+              onRenameRequest={handleRenameRequest}
               isAlarmOn={isAlarmOn}
             />
           ))}
