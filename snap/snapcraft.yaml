@@ -25,6 +25,5 @@ apps:
     plugs:
       - browser-support
       - audio-playback
-    desktop: limit-counter.desktop
     extensions:
       - gnome
